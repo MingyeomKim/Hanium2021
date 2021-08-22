@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{%with messages = get_flashed_messages()%}
+{%if messages %}
+  <script type="text/javascript">
+    alert("{{messages[-1]}}");
+  </script>
+  {%endif%}
+{%endwith%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signupPage.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="container">
+        <div class="headline">
+            <img src="{{ url_for('static', filename='image/induck.jpg') }}" class="logo">
+            비룡이와 인덕이
+        </div>
+        <form action="signupWaitPage" class="formBox" method="GET">
+            <div class="upperBox">
+                <div class="idBox">
+                    <i class="far fa-user"></i>
+                    <input type="text" placeholder="ID" name="new_id">
+                </div>
+                <div class="pwBox">
+                    <i class="fas fa-key"></i>
+                    <input type="text" placeholder="PW" name="new_pw">
+                </div>
+                <div class="pwBox">
+                    <i class="far fa-envelope"></i>
+                    <input type="text" placeholder="Email" name="new_email">
+                </div>
+                <div class="signup">
+                    <i class="fas fa-user-plus"></i>
+                    <input type="submit" value="SIGN UP" class="submitBox">
+                </div>
+            </div>
+        </form>
+        <div class="underText">
+            biryong induck door lock
+        </div>
+    </div>
+</body>
+</html>
