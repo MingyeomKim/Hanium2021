@@ -9,46 +9,53 @@ import os
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 #파일 업로드 용량 제한 단위:바이트 #16MB 제한
-app.secret_key = 'qwer1234'
-path = 'C:\\Users\\Administrator\\Desktop\\final\\userList.json'
+app.secret_key = 'qwer1234' #소켓 통신을 위한 Key 설정
+path = 'C:\\project\\Hanium2021\\userList.json'  #사용자 정보를 저장한 userList.json 파일의 경로를 변수화
+
 
 HOST = '0.0.0.0'
 port = 1004
+#서버에서 클라이언트로 데이터 전송을 하기 위한 HOST와 PORT 지정
 
-
+#  기본 Url에 접근할 때 로그인 화면으로 이동
 @app.route('/')
 def loginPage():
     return render_template("loginPage.html")
 
+# mainPage로 이동
 @app.route('/mainPage', methods = ["GET"])
 def mainPage():
     with open(path, 'r') as f:
-        userList = json.load(f)
+        userList = json.load(f) 
+        #userList.json 파일을 'f'라는 이름으로 열어서 변수에 저장
 
     if request.method == "GET":
         user_id = request.args.get("user_id")
         user_pw = request.args.get("user_pw")
+        # GET방식으로 user_id, user_pw 값을 받음
         print(user_id, user_pw)
+        #user_id를 입력하지 않은 경우
         if user_id == "":
             flash("아이디를 입력해주세요!")
             f.close()
             return redirect(url_for('loginPage'))
-            
+        # user_pw를 입력하지 않은 경우    
         elif user_pw == "":
             flash("비밀번호를 입력해주세요!")
             f.close()
             return redirect(url_for('loginPage')) 
-
+        # 입력한 user_id에 해당하는 key가 존재할 경우 
         elif userList.get(user_id) != None:
-            if userList[user_id][0] == user_pw:
+            if userList[user_id][0] == user_pw: #비밀번호가 일치하면
                 flash(f"{user_id}님 안녕하세요")
                 f.close()
-                return render_template("mainPage.html")
+                return render_template("mainPage.html") 
+                #로그인 된 페이지로 이동
             else:
                 flash("비밀번호 오류입니다!")
                 f.close()
                 return redirect(url_for('loginPage'))
-                
+        # 입력한 정보가 일치하지 않는 경우 
         else:
             flash("아이디가 존재하지 않습니다!")
             f.close()
@@ -56,67 +63,77 @@ def mainPage():
 
 # 문을 여는 함수
 # -------------------------------------------
-@app.route('/openDoor')
-def opendoor():
-    # commu.py에 문을 열라는 시그널 전송
-    client.sendall('open'.encode())
-    flash("문을 열었습니다.")
-    return render_template("mainPage.html")
+# @app.route('/openDoor')
+# def opendoor():
+#     # commu.py에 문을 열라는 시그널 전송
+#     client.sendall('open'.encode())
+#     flash("문을 열었습니다.")
+#     return render_template("mainPage.html")
 # -------------------------------------------
 
-
+# 출입 로그를 띄우는 화면
 @app.route('/enterlogPage')
 def enterlogPage():
     return render_template("enterlogPage.html")
 
+# 회원가입 화면 
 @app.route('/signupPage')
 def signupPage():
     return render_template("signupPage.html")
 
+#
 @app.route('/signupWaitPage', methods = ['GET'])
 def signupWaitPage():
+    # userList.json 파일을 'f'라는 이름으로 불러옴
     with open(path, 'r') as f:
         userList = json.load(f)
-
+    # GET 메소드로 사용자의 id, pw, email을 각각 변수에 담음 
     if request.method == "GET":
         new_id = request.args.get("new_id")
         new_pw = request.args.get("new_pw")
         new_email = request.args.get("new_email")
 
-        print(new_id, new_pw, new_email)
+        print(new_id, new_pw, new_email) #콘솔에 출력
+        # id가 비어있는 경우 
         if new_id == "":
             flash("아이디를 입력해주세요!")
             f.close()
             return redirect(url_for('signupPage'))
+        # pw가 비어있는 경우 
         elif new_pw == "":
             flash("비밀번호를 입력해주세요!")
             f.close()
             return redirect(url_for('signupPage'))
-
+        # email이 비어있는 경우 
         elif new_email == "":
             flash("이메일을 입력해주세요!")
             f.close()
             return redirect(url_for('signupPage'))
-
+        # userList의 key에서 입력한 id가 이미 존재하는 경우 
         elif userList.get(new_id) != None:
             flash("이미 존재하는 아이디입니다.")
             f.close()
             return redirect(url_for('signupPage'))
+        # 회원가입을 정상적으로 진행한 경우 
         else:
             print(json.dumps(userList, indent='\t'))
+            # 문자열 사이에 Tap 간격을 주고 json 객체를 직렬화하여 출력
             userList[new_id] = [new_pw, new_email]
+            # 새로운 key와 value를 추가
             with open(path, 'w') as outfile:
                 json.dump(userList, outfile, indent='\t')
-            
+            # 'outfile'이라는 이름으로 userList.json 파일을 쓰기모드로 연다.
             with open(path, 'r') as f:
                 new_userList = json.load(f)
+                # 읽기 모드로 새로운 userList.json 파일을 열고 
+
             
             print(json.dumps(new_userList, indent='\t'))
-
+            # 콘솔에 출력한다. 
             print("success")
             return render_template("loginPage.html")
 
-
+# 사용자 정보를 출력하는 화면
 @app.route('/userinfoPage')
 def userinfoPage():
     return render_template('userinfoPage.html')
@@ -139,9 +156,9 @@ def delete():
 
     # commu.py에 삭제한다는 시그널과 삭제할 이름 보내기
     # -------------------------------
-    client.sendall('remove'.encode())
-    r_name = fileName[:-4]
-    client.sendall(r_name.encode())
+    # client.sendall('remove'.encode())
+    # r_name = fileName[:-4]
+    # client.sendall(r_name.encode())
     # -------------------------------
     return
 
@@ -150,30 +167,33 @@ def fileUpload():
     if request.method == 'POST':
         img = request.files['file']
         uname = request.form.get('uname')
-        img.save('C:\\Users\\Administrator\\Desktop\\UserImage\\' + secure_filename(f'{uname}.jpg'))
+        img.save('C:\\project\\Hanium2021\\static\\UserImage' + secure_filename(f'{uname}.jpg'))
 
         # commu.py에 추가한다는 시그널과 추가할 이름, 인코딩한 데이터 전송
         # -------------------------------------------------------------------------------------------
-        name = f'{uname}'
-        client.sendall('add'.encode())
-        client.sendall(name.encode());sleep(0.01)
-        data = face_encoding('C:\\Users\\Administrator\\Desktop\\UserImage\\' + f'{uname}.jpg')
-        client.sendall(data.encode())
+        # name = f'{uname}'
+        # client.sendall('add'.encode())
+        # client.sendall(name.encode());sleep(0.01)
+        # data = face_encoding('C:\\Users\\Administrator\\Desktop\\UserImage\\' + f'{uname}.jpg')
+        # client.sendall(data.encode())
         # -------------------------------------------------------------------------------------------
-    return redirect('http://110.165.16.23:1219/userinfoPage')
+    return redirect('http://127.0.0.1:5000/userinfoPage')
 
 if __name__ == "__main__":
     from waitress import serve
 
     # 소켓 열고 commu.py와 연결하고 client 주소 받기.
     # ----------------------------------------------------
-    socket = sc.socket(sc.AF_INET, sc.SOCK_STREAM)
-    socket.setsockopt(sc.SOL_SOCKET, sc.SO_REUSEADDR, 1)
-    socket.bind((HOST, port))
-    socket.listen()
-    client, addr = socket.accept()
+    # socket = sc.socket(sc.AF_INET, sc.SOCK_STREAM)
+    # socket.setsockopt(sc.SOL_SOCKET, sc.SO_REUSEADDR, 1)
+    # socket.bind((HOST, port))
+    # socket.listen()
+    # client, addr = socket.accept()
     # ----------------------------------------------------
-    serve(app, host="0.0.0.0", port=1219)
+    app.jinja_env.auto_reload = True
+    app.config["TEMPLATES_AUTO_RELOAD"] = True
+    serve(app, host="0.0.0.0", port=5000)
     app.debug = True
+    # app.run(debugs = True, host = '0.0.0.0', port = 5000)
     
     # app.run()

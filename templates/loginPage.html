@@ -12,20 +12,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/loginPage.css') }}">
+    <link rel = "stylesheet" type = "text/css" href = "../static/css/loginPage.css">
+    <!-- <link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename='css/loginPage.css') }}"> -->
+    <!-- <link rel = "stylesheet" type = "text/css" href = "../static/css/loginPage.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel= "stylesheet" href = "./css/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous"> -->
 </head>
 <body>
     <div class="container">
         <div class="headline">
             <img src="{{ url_for('static', filename='image/induck.jpg') }}" class="logo">
-            비룡이와 인덕이
+            <span style = "font-family: 'Jua", sans-serif>
+              &nbsp; 비룡이와 인덕이 </span>
         </div>
         <form action="/mainPage" class="formBox" method="GET">
-            <div class="upperBox">
+            <div >
                 <div class="idBox">
                     <i class="far fa-user"></i>
-                    <input type="text" placeholder="ID" required name = "user_id">
+                    <input type="text" placeholder="ID" class = "" required name = "user_id">
                 </div>
                 <div class="pwBox">
                     <i class="fas fa-key"></i>
@@ -34,7 +43,7 @@
             </div>
             <div class="underBox">
                 <div class="forget">forget password?</div>
-                <input type="submit" value="LOGIN" class="submitBox" style="cursor:pointer;">
+                <input type="submit" value="LOGIN" class="submitBox">
             </div>
         </form>
         <img src="{{ url_for('static', filename='image/line.png') }}" class="line">
@@ -48,5 +57,7 @@
             biryong induck door lock
         </div>
     </div>
+
+
 </body>
 </html>

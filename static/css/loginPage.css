@@ -7,10 +7,14 @@ body{
     height: 896px;
     width: 100%;
 }
+
+
 a{
     color: inherit; /* blue colors for links too */
     text-decoration: inherit; /* no underline */
 }
+
+
 .container{
     width: 414px;
     height: 896px;
@@ -61,10 +65,11 @@ input{
     color: rgb(172,172,172);
 }
 .submitBox{
-    background-color: rgb(98,98,98);
-    color: white;
+    border-radius : 3px;
+    color: rgb(114, 114, 114);
     width: 163px;
     height: 72px;
+    cursor:pointer;
 }
 .line{
     width: 329px;
