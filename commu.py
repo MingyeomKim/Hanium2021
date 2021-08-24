@@ -30,14 +30,14 @@ while True:
 
         # app.py에서 이름 받아오고 라파로 전송
         name = socket_1.recv(64)
-        print(len(name.decode('utf-8')))
+        print("여기는 1번입니다", name)
         client.sendall(name);sleep(0.01)
 
         # app.py에서 인코딩한 데이터 받아오고 라파로 전송
         data = socket_1.recv(4096)
-        print(len(data.decode()))
+        print("여기는 2번입니다", name)
         client.sendall(data)
-
+        
     # open 시그널은 문 열기
     elif signal.decode() == 'open':
         # 라파로 시그널 전송

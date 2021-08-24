@@ -11,25 +11,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>비룡이와 인덕이</title>
+    <meta name = "description" content = "한이음 프로젝트 '비룡이와 인덕이'팀, 라즈베리파이 기반 얼굴인식 도어락 시스템의 사용자 출입 관리 어플리케이션입니다.">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/loginPage.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400;1,600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <div class="headline">
-            <img src="{{ url_for('static', filename='image/induck.jpg') }}" class="logo">
-            비룡이와 인덕이
+            <img src="{{ url_for('static', filename='image/duck.png') }}" class="logo">
+            <h1>비룡이와 인덕이</h1>
         </div>
         <form action="/mainPage" class="formBox" method="GET">
             <div class="upperBox">
                 <div class="idBox">
-                    <i class="far fa-user"></i>
+                    <i id = "idIcon"class="far fa-user"></i>
                     <input type="text" placeholder="ID" required name = "user_id">
                 </div>
                 <div class="pwBox">
-                    <i class="fas fa-key"></i>
-                    <input type="password" placeholder="PW" required name = "user_pw">
+                    <i id = "pwIcon" class="fas fa-key"></i>
+                    <input type="password" placeholder="PW" required name = "user_pw" value = "f2f2f2">
                 </div>
             </div>
             <div class="underBox">
@@ -40,7 +45,7 @@
         <img src="{{ url_for('static', filename='image/line.png') }}" class="line">
         <a href='/signupPage'>
             <div class="signup">
-                <i class="fas fa-user-plus"></i>
+                <i class="fas fa-user-plus" style = 'color : white'></i>
                 SIGN UP
             </div>
         </a>

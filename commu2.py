@@ -1,4 +1,5 @@
 import socket as sc
+import datetime
 
 HOST_3 = '0.0.0.0'
 PORT_3 = 31005
@@ -14,10 +15,14 @@ client, addr = socket_3.accept()
 print(1)
 while True: 
     print(2)
-    temperature_data = client.recv(100)
-    print(3)
-    temperature_data = temperature_data.decode('utf-8')
-    print(4)
-    print(temperature_data)
-    with open(path, 'a') as Temperature_file:
-        Temperature_file.write(temperature_data)
+    datas = client.recv(100)
+    
+    datas = datas.decode('utf-8')
+
+    if datas[0] == "{":
+        times = datetime.datetime.today()
+        times = str(times)
+        times = times[:19]
+        datas = datas[:datas.find("[")+5] + datas[datas.find("]") :-2] + ", \"times\":" + times + "}\n"
+        with open(path, 'a') as Temperature_file:
+            Temperature_file.write(datas)

@@ -15,14 +15,25 @@ a{
 /* 이미지 컨테이너랑 스크롤 이미지 css파일을 추가함 */
 .imgContainer{
     display: flex;
-    justify-content: space-around;
     align-items: center;
+    height: 45px;
+    border-bottom: 1px solid;
 }
 .scrollImage{
     width: 100px;
     height: 100px;
 }
-
+.nameDiv{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    border-right: 1px solid;
+}
+.buttonDiv{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
 .container{
     width: 414px;
     height: 896px;
@@ -46,10 +57,13 @@ a{
     width: 296px;
     height: 375px;
     border: 1px solid;
+    border-top: 2px solid;
     margin-top: 25px;
     overflow: scroll;
     overflow-x: hidden;
     margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
 }
 .formBox{
     display: flex;
@@ -68,7 +82,7 @@ a{
 }
 .underText{
     font-size: 18px;
-    margin-top: 100px;
+    margin-top: 70px;
     font-weight: 600;
 }
 .uname{
